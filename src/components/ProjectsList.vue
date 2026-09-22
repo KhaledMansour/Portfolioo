@@ -4,16 +4,18 @@
         <template v-for="project in projects">
           <div
             :key="project.id"
-              @click="showDetails(project)"
-              class="project-item"
-              :class="{ 'wide': project.isWide, 'high': project.isHigh }">
-            <div class="project-item-image" :style="{ 'background-image': 'url(' + project.iconUrl + ')' }">
-            </div>
-            <div class="title-bar" :style="{ 'background-color': project.accentColor + 'DD' }">
-                <div class="title-text">
-                  {{ project.name }}
-                </div>
+            @click="showDetails(project)"
+            class="project-card">
+            
+            <img :src="project.iconUrl" alt="Game Banner" class="card-banner" />
+            
+            <div class="card-content">
+              <h3 class="card-title">{{ project.name }}</h3>
+              <div class="card-icons">
+                <i class="fa fa-android fa-lg"></i>
+                <i class="fa fa-apple fa-lg"></i>
               </div>
+            </div>
           </div>
         </template>
       </div>
@@ -51,9 +53,6 @@ export default Vue.extend({
   },
   methods: {
     showDetails: function (item: ProjectData) {
-      // if (event) {
-      //   alert(event.target);
-      // }
       this.popupTitle = item.name;
       this.popupColor = item.accentColor;
       this.popupContent = item.htmlDescription;
@@ -65,67 +64,58 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
 
-.project-item {
-  height: 300px;
-  margin-bottom: 20px;
-  width: 100%;
-  cursor: pointer;
-  position: relative;
+.project-card {
+  background-color: #2c2c2c;
+  border-radius: 12px;
   overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 320px;
+  position: relative;
 }
 
-.project-item-image {
-  background-size: cover;
-  background-position: center;
-  height: 100%;
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+.card-banner {
   width: 100%;
-  transition: all 0.2s;
-}
-.project-item-image:hover {
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
+  height: 180px;
+  object-fit: contain;
+  background-color: #1e1e1e; /* Adds a slightly darker background for letterboxing */
 }
 
-.project-item:hover {
-filter: brightness(120%);
+.card-content {
+  padding: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
 }
 
-.title-bar {
+.card-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-icons {
   position: absolute;
-  bottom: 0px;
-  width: 100%;
-  background-color: #222222;
+  bottom: 15px;
+  left: 15px;
+  display: flex;
+  gap: 15px;
+  color: #aaaaaa;
 }
-
-.title-text {
-  padding: 10px;
-}
-
-@media only screen and (min-width: 620px){
-  .projects-list {
-    max-width: 900px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 20px;
-    grid-auto-rows: minmax(250px, auto);
-  }
-
-  .project-item {
-    margin: 0px;
-    height: 100%;
-    width: 100%;
-  }
-
-  .wide {
-    grid-column-end: span 2;
-  }
-  .high {
-    grid-row-end: span 2;
-  }
-}
-
-
-
 </style>

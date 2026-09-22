@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div v-if="visible">
-      <div class="overlay">
+      <div class="overlay" @click="$emit('close')">
       </div>
       <div class="dialog" :style="{ 'background-color': color }">
         <h1 class="dialog-title">{{ title }}</h1>
@@ -74,8 +74,8 @@ h1.dialog-title {
 }
 
 .dialog-content {
-  background-color: #fcfcfc;
-  color: #696969;
+  background-color: #2c2c2c;
+  color: #e0e0e0;
 }
 .dialog-close {
   position: absolute;
